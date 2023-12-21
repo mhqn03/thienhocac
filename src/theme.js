@@ -2,6 +2,9 @@ import { experimental_extendTheme as extendTheme } from "@mui/material/styles";
 
 // Create a theme instance.
 const theme = extendTheme({
+  typography: {
+    fontFamily: "Quicksand, sans-serif",
+  },
   colorSchemes: {
     light: {
       // palette: {

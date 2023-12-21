@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Experimental_CssVarsProvider as CssVarsProvider } from "@mui/material/styles";
@@ -20,23 +21,25 @@ if (!PUBLISHABLE_KEY) {
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+    <BrowserRouter>
       <CssVarsProvider theme={theme}>
-        <ConfirmProvider
-          defaultOptions={{
-            allowClose: false,
-            confirmationButtonProps: {
-              color: "secondary",
-              variant: "outlined",
-            },
-            cancellationButtonProps: { color: "inherit" },
-          }}
-        >
-          <CssBaseline />
-          <App />
-          <ToastContainer theme="colored" position="bottom-left" />
-        </ConfirmProvider>
+        <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+          <ConfirmProvider
+            defaultOptions={{
+              allowClose: false,
+              confirmationButtonProps: {
+                color: "secondary",
+                variant: "outlined",
+              },
+              cancellationButtonProps: { color: "inherit" },
+            }}
+          >
+            <CssBaseline />
+            <App />
+            <ToastContainer theme="colored" position="bottom-left" />
+          </ConfirmProvider>
+        </ClerkProvider>
       </CssVarsProvider>
-    </ClerkProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );

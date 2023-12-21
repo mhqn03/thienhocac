@@ -1,28 +1,32 @@
-import {
-  SignOutButton,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-} from "@clerk/clerk-react";
+import { SignedIn, SignIn, SignUp } from "@clerk/clerk-react";
+import Box from "@mui/material/Box";
+import { Route, Routes } from "react-router-dom";
+import PublicPage from "./pages/PublicPage/PublicPage";
+import PrivatePage from "./pages/PrivatePage/PrivatePage";
 
 function App() {
   return (
-    <div>
-      <SignedOut>
-        <SignInButton />
-        <p>
-          This content is public. Only signed out users can see the SignInButton
-          above this text.
-        </p>
-      </SignedOut>
-      <SignedIn>
-        <SignOutButton afterSignOutUrl="/" />
-        <p>
-          This content is private. Only signed in users can see the
-          SignOutButton above this text.
-        </p>
-      </SignedIn>
-    </div>
+    <Box>
+      <Routes>
+        <Route path="/" element={<PublicPage />} />
+        <Route
+          path="/sign-in/*"
+          element={<SignIn routing="path" path="/sign-in" />}
+        />
+        <Route
+          path="/sign-up/*"
+          element={<SignUp routing="path" path="/sign-up" />}
+        />
+        <Route
+          path="/protected"
+          element={
+            <SignedIn>
+              <PrivatePage />
+            </SignedIn>
+          }
+        />
+      </Routes>
+    </Box>
   );
 }
 
