@@ -6,7 +6,12 @@ import SignUpPage from "./pages/auth/SignUp";
 
 function App() {
   return (
-    <Box>
+    <Box
+      sx={{
+        width: "100vw",
+        height: "100vh",
+      }}
+    >
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/sign-in/*" element={<SignInPage />} />
