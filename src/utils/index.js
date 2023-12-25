@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-const SECRET_KEY = import.meta.env.SECRET_KEY;
+const SECRET_KEY = import.meta.env.VITE_SECRET_KEY;
 
 const hashingPassword = (password) => {
   const saltRound = 10;

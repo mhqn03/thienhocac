@@ -36,7 +36,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         >
           <CssBaseline />
           <App />
-          <ToastContainer theme="colored" position="bottom-left" />
+          <ToastContainer
+            theme="colored"
+            position="bottom-left"
+            style={{ width: "max-content" }}
+          />
         </ConfirmProvider>
         {/* </ClerkProvider> */}
       </CssVarsProvider>
