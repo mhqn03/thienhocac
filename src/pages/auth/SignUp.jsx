@@ -35,18 +35,24 @@ function SignUpPage() {
   };
 
   const handleSubmit = async () => {
-    // const result = await postUserInfo(user);
     if (!validateEmail(user.email)) {
       toast.warning("Vui lòng nhập đúng định dạng Email!", toastOptions);
     } else if (!validatePassword(user.password)) {
-      toast.warning("Mật khẩu cần 1 chữ cái viết hoa và ít nhất 8 ký tự.");
+      toast.warning(
+        <div>
+          Mật khẩu cần 1 chữ cái viết hoa,
+          <br />1 chữ số và ít nhất 8 ký tự.
+        </div>
+      );
     } else {
-      const hashedPassword = hashingPassword(user.password);
-      // console.log(hashedPassword);
+      const hashP = hashingPassword(user.password);
+      user.password = hashP.hashedPassword;
+      user.salt = hashP.salt;
+      await postUserInfo(user);
       toast.success("Tạo tài khoản thành công!", toastOptions);
-      // setTimeout(() => {
-      //   navigate("/sign-in");
-      // }, 2000);
+      setTimeout(() => {
+        navigate("/sign-in");
+      }, 2000);
     }
   };
 

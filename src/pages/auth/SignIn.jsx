@@ -3,17 +3,58 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { getUserInfo } from "~/apis";
+import { comparePassword } from "~/utils";
+import { AuthContext } from "~/components/authProtect/AuthProtect";
 
 function SignInPage() {
+  const toastOptions = { autoClose: 1000 };
+  const { setIsSignedIn } = useContext(AuthContext);
   const [user, setUser] = useState({});
+  const navigate = useNavigate();
+  const secret_key = import.meta.env.VITE_SECRET_KEY;
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
 
-  // console.log(user);
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSubmit();
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!user.email) {
+      toast.warning("Vui lòng nhập email!", toastOptions);
+    } else {
+      const userInfo = await getUserInfo();
+      if (!userInfo.map((e) => e.email).includes(user.email)) {
+        toast.warning("Tài khoản không tồn tại!", toastOptions);
+      } else {
+        const result = userInfo.filter((e) => e.email === user.email)?.[0];
+        if (!user.password) {
+          toast.warning("Vui lòng nhập đầy đủ!", toastOptions);
+        } else if (
+          !comparePassword(user.password, result.salt, result.password)
+        ) {
+          toast.error("Sai mật khẩu!", toastOptions);
+        } else if (
+          comparePassword(user.password, result.salt, result.password)
+        ) {
+          toast.success("Đăng nhập thành công!", toastOptions);
+          localStorage.setItem(`${secret_key}`, true);
+          setIsSignedIn(true);
+          setTimeout(() => {
+            navigate("/");
+          }, 2000);
+        }
+      }
+    }
+  };
 
   return (
     <Box
@@ -77,6 +118,7 @@ function SignInPage() {
           name="password"
           type="password"
           size="small"
+          onKeyDown={handleKeyDown}
           defaultValue={user.password}
           onChange={handleInputChange}
           autoComplete="off"
@@ -104,6 +146,7 @@ function SignInPage() {
         <Button
           variant="outlined"
           size="small"
+          onClick={handleSubmit}
           sx={{
             color: (theme) =>
               theme.palette.mode === "light" ? "black" : "#eeeeee80",

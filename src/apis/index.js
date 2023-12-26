@@ -5,7 +5,7 @@ const headers = {
   "Content-Type": "application/json",
 };
 
-export const fetchUserInfo = async () => {
+export const getUserInfo = async () => {
   const response = await axios.get(`${url}`);
   return response.data;
 };
