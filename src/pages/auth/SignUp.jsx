@@ -1,3 +1,4 @@
+import Tooltip from "@mui/material/Tooltip";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -5,9 +6,11 @@ import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { hashingPassword } from "~/utils";
 import { postUserInfo } from "~/apis";
 
 function SignUpPage() {
+  const toastOptions = { autoClose: 1000 };
   const navigate = useNavigate();
   const [user, setUser] = useState({});
   const handleInputChange = (e) => {
@@ -33,10 +36,18 @@ function SignUpPage() {
 
   const handleSubmit = async () => {
     // const result = await postUserInfo(user);
-    toast.success("Created successfully!", { autoClose: 1000 });
-    setTimeout(() => {
-      navigate("/sign-in");
-    }, 2000);
+    if (!validateEmail(user.email)) {
+      toast.warning("Vui lòng nhập đúng định dạng Email!", toastOptions);
+    } else if (!validatePassword(user.password)) {
+      toast.warning("Mật khẩu cần 1 chữ cái viết hoa và ít nhất 8 ký tự.");
+    } else {
+      const hashedPassword = hashingPassword(user.password);
+      // console.log(hashedPassword);
+      toast.success("Tạo tài khoản thành công!", toastOptions);
+      // setTimeout(() => {
+      //   navigate("/sign-in");
+      // }, 2000);
+    }
   };
 
   return (
@@ -181,13 +192,22 @@ function SignUpPage() {
               },
             }}
           >
-            <img
-              src="./facebook.svg"
-              alt="Facebook"
-              style={{
-                cursor: "pointer",
+            <Tooltip
+              sx={{
+                p: 0,
+                m: 0,
               }}
-            />
+              title="Hiện không hoạt động!"
+              placement="top-start"
+            >
+              <img
+                src="./facebook.svg"
+                alt="Facebook"
+                style={{
+                  cursor: "pointer",
+                }}
+              />
+            </Tooltip>
           </Box>
         </Box>
         <Box

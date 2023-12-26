@@ -1,5 +1,6 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
@@ -154,13 +155,22 @@ function SignInPage() {
               },
             }}
           >
-            <img
-              src="./facebook.svg"
-              alt="Facebook"
-              style={{
-                cursor: "pointer",
+            <Tooltip
+              sx={{
+                p: 0,
+                m: 0,
               }}
-            />
+              title="Hiện không hoạt động!"
+              placement="right-start"
+            >
+              <img
+                src="./facebook.svg"
+                alt="Facebook"
+                style={{
+                  cursor: "pointer",
+                }}
+              />
+            </Tooltip>
           </Box>
         </Box>
         <Box
