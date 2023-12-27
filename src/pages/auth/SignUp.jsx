@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { hashingPassword } from "~/utils";
-import { postUserInfo } from "~/apis";
+import { getUserInfo, postUserInfo } from "~/apis";
 
 function SignUpPage() {
   const toastOptions = { autoClose: 1000 };
@@ -45,14 +45,19 @@ function SignUpPage() {
         </div>
       );
     } else {
-      const hashP = hashingPassword(user.password);
-      user.password = hashP.hashedPassword;
-      user.salt = hashP.salt;
-      await postUserInfo(user);
-      toast.success("Tạo tài khoản thành công!", toastOptions);
-      setTimeout(() => {
-        navigate("/sign-in");
-      }, 2000);
+      const result = await getUserInfo();
+      if (result.map((e) => e.email).includes(user.email)) {
+        toast.warning("Tài khoản đã tồn tại!", toastOptions);
+      } else {
+        const hashP = hashingPassword(user.password);
+        user.password = hashP.hashedPassword;
+        user.salt = hashP.salt;
+        await postUserInfo(user);
+        toast.success("Tạo tài khoản thành công!", toastOptions);
+        setTimeout(() => {
+          navigate("/sign-in");
+        }, 2000);
+      }
     }
   };
 
@@ -63,6 +68,8 @@ function SignUpPage() {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
+        bgcolor: (theme) =>
+          theme.palette.mode === "dark" ? "#2c3e50" : "#e0e0e0",
       }}
     >
       <Box
@@ -76,8 +83,8 @@ function SignUpPage() {
           height: "24rem",
           boxShadow: (theme) =>
             theme.palette.mode === "light"
-              ? "0px 6px 16px -6px rgba(1, 1, 1, 0.5)"
-              : "0px 6px 16px -6px rgba(255, 255, 255, 0.5)",
+              ? "-20px 20px 60px #bebebe, 20px -20px 60px #ffffff"
+              : "-20px 20px 60px #253544, 20px -20px 60px #33475c",
           borderRadius: "20px",
         }}
       >
@@ -161,6 +168,9 @@ function SignUpPage() {
                   ? "1px solid #878787de"
                   : "1px solid #eeeeee80",
             },
+            "&:active": {
+              transform: "scale(0.94)",
+            },
           }}
         >
           Sign up
@@ -180,6 +190,9 @@ function SignUpPage() {
               "&:hover": {
                 opacity: "0.8",
               },
+              "&:active": {
+                transform: "scale(0.9)",
+              },
             }}
           >
             <img
@@ -195,6 +208,9 @@ function SignUpPage() {
               transition: "all .2s ease-in-out",
               "&:hover": {
                 opacity: "0.7",
+              },
+              "&:active": {
+                transform: "scale(0.9)",
               },
             }}
           >

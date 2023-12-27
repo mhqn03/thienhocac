@@ -63,6 +63,8 @@ function SignInPage() {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
+        bgcolor: (theme) =>
+          theme.palette.mode === "dark" ? "#2c3e50" : "#e0e0e0",
       }}
     >
       <Box
@@ -76,8 +78,8 @@ function SignInPage() {
           height: "24rem",
           boxShadow: (theme) =>
             theme.palette.mode === "light"
-              ? "0px 6px 16px -6px rgba(1, 1, 1, 0.5)"
-              : "0px 6px 16px -6px rgba(255, 255, 255, 0.5)",
+              ? "-20px 20px 60px #bebebe, 20px -20px 60px #ffffff"
+              : "-20px 20px 60px #253544, 20px -20px 60px #33475c",
           borderRadius: "20px",
         }}
       >
@@ -161,6 +163,9 @@ function SignInPage() {
                   ? "1px solid #878787de"
                   : "1px solid #eeeeee80",
             },
+            "&:active": {
+              transform: "scale(0.94)",
+            },
           }}
         >
           Sign in
@@ -180,6 +185,9 @@ function SignInPage() {
               "&:hover": {
                 opacity: "0.8",
               },
+              "&:active": {
+                transform: "scale(0.9)",
+              },
             }}
           >
             <img
@@ -195,6 +203,9 @@ function SignInPage() {
               transition: "all .2s ease-in-out",
               "&:hover": {
                 opacity: "0.7",
+              },
+              "&:active": {
+                transform: "scale(0.9)",
               },
             }}
           >

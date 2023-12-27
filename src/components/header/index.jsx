@@ -1,10 +1,10 @@
+import { useContext } from "react";
 import Box from "@mui/material/Box";
 import Tooltip from "@mui/material/Tooltip";
 import { MaterialUISwitch } from "../uiSwitch";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { Button, useColorScheme } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
 import { AuthContext } from "../authProtect/AuthProtect";
 
 function Header() {
@@ -14,8 +14,14 @@ function Header() {
 
   return (
     <Box sx={{ display: "flex", justifyContent: "space-between", p: 1 }}>
-      home
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+      <Box>home</Box>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <Box
           onClick={() =>
             mode === "light" ? setMode("dark") : setMode("light")
