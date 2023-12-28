@@ -1,3 +1,4 @@
+import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
@@ -47,6 +48,7 @@ function SignInPage() {
         ) {
           toast.success("Đăng nhập thành công!", toastOptions);
           localStorage.setItem(`${secret_key}`, true);
+          localStorage.setItem("current_userId", result.id);
           setIsSignedIn(true);
           setTimeout(() => {
             navigate("/");
@@ -190,7 +192,7 @@ function SignInPage() {
               },
             }}
           >
-            <img
+            <Avatar
               src="./google.svg"
               alt="Google"
               style={{
@@ -217,7 +219,7 @@ function SignInPage() {
               title="Hiện không hoạt động!"
               placement="right-start"
             >
-              <img
+              <Avatar
                 src="./facebook.svg"
                 alt="Facebook"
                 style={{

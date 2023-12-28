@@ -19,7 +19,16 @@ const theme = extendTheme({
       // },
     },
   },
-
+  breakpoints: {
+    values: {
+      def: 100,
+      xs: 500,
+      sm: 600,
+      md: 960,
+      lg: 1280,
+      xl: 1920,
+    },
+  },
   // https://mui.com/material-ui/customization/theme-components/#theme-style-overrides
   components: {
     MuiCssBaseline: {
@@ -70,7 +79,7 @@ const theme = extendTheme({
       styleOverrides: {
         root: {
           fontSize: "0.875rem",
-          "& fieldset": {
+          fieldset: {
             borderWidth: "0.5px !important",
           },
           "&:hover fieldset": {

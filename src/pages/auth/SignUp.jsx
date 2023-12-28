@@ -1,7 +1,8 @@
-import Tooltip from "@mui/material/Tooltip";
+import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -195,9 +196,10 @@ function SignUpPage() {
               },
             }}
           >
-            <img
+            <Avatar
               src="./google.svg"
               alt="Google"
+              sizes="small"
               style={{
                 cursor: "pointer",
               }}
@@ -222,9 +224,10 @@ function SignUpPage() {
               title="Hiện không hoạt động!"
               placement="top-start"
             >
-              <img
+              <Avatar
                 src="./facebook.svg"
                 alt="Facebook"
+                sizes="small"
                 style={{
                   cursor: "pointer",
                 }}
