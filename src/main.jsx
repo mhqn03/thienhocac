@@ -7,23 +7,14 @@ import { Experimental_CssVarsProvider as CssVarsProvider } from "@mui/material/s
 import theme from "./theme";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import { ClerkProvider } from "@clerk/clerk-react";
 
 // cấu hình MUI-dialog
 import { ConfirmProvider } from "material-ui-confirm";
-
-// Import your publishable key (clerk)
-// const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
-
-// if (!PUBLISHABLE_KEY) {
-//   throw new Error("Missing Publishable Key");
-// }
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <CssVarsProvider theme={theme}>
-        {/* <ClerkProvider publishableKey={PUBLISHABLE_KEY}> */}
         <ConfirmProvider
           defaultOptions={{
             allowClose: false,
@@ -42,7 +33,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             style={{ width: "max-content" }}
           />
         </ConfirmProvider>
-        {/* </ClerkProvider> */}
       </CssVarsProvider>
     </BrowserRouter>
   </React.StrictMode>
