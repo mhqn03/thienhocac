@@ -23,6 +23,13 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               variant: "outlined",
             },
             cancellationButtonProps: { color: "inherit" },
+            dialogProps: {
+              PaperProps: {
+                sx: {
+                  borderRadius: "13px",
+                },
+              },
+            },
           }}
         >
           <CssBaseline />

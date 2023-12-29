@@ -1,5 +1,5 @@
-import { useContext, useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Fragment, useContext, useState, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Tooltip from "@mui/material/Tooltip";
@@ -14,6 +14,9 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
+import Drawer from "@mui/material/Drawer";
+import { useConfirm } from "material-ui-confirm";
+import { ListSideBar } from "./mobile-side-bar";
 import { AuthContext } from "../authProtect/AuthProtect";
 
 function Header() {
@@ -21,10 +24,46 @@ function Header() {
   const { setIsSignedIn } = useContext(AuthContext);
   const secret_key = import.meta.env.VITE_SECRET_KEY;
   const [searchValue, setSearchValue] = useState("");
-  const [mobileSideBar, setMobileSideBar] = useState(false);
   const inputRef = useRef(null);
   const handleClick = () => {
     inputRef.current.focus();
+  };
+
+  const [state, setState] = useState({
+    left: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+    setState({ ...state, [anchor]: open });
+  };
+
+  const logOut = useConfirm();
+  const navigate = useNavigate();
+  const handleLogOut = () => {
+    logOut({
+      title: "Log out",
+      description: "Bạn có muốn đăng xuất?",
+      confirmationText: "Có",
+      cancellationText: "Không",
+      dialogProps: {
+        sx: {
+          borderRadius: "13px",
+        },
+      },
+    })
+      .then(() => {
+        setIsSignedIn(false);
+        localStorage.removeItem(`${secret_key}`);
+        localStorage.removeItem("current_userId");
+        navigate("/sign-in");
+      })
+      .catch(() => {});
   };
 
   return (
@@ -36,29 +75,56 @@ function Header() {
         p: 1,
       }}
     >
-      {!mobileSideBar ? (
-        <MenuRoundedIcon
-          sx={{
-            display: { def: "block", xs: "none" },
-            alignItems: "center",
-            cursor: "pointer",
-          }}
-          onClick={() => {
-            setMobileSideBar(true);
-          }}
-        />
-      ) : (
-        <CloseRoundedIcon
-          sx={{
-            display: { def: "block", xs: "none" },
-            alignItems: "center",
-            cursor: "pointer",
-          }}
-          onClick={() => {
-            setMobileSideBar(false);
-          }}
-        />
-      )}
+      {["left"].map((anchor) => (
+        <Fragment key={anchor}>
+          <MenuRoundedIcon
+            sx={{
+              display: { def: "block", xs: "none" },
+              alignItems: "center",
+              cursor: "pointer",
+              transition: "all .2s linear",
+              transform: state[anchor] ? "translateX(-100%)" : "translateX(0)",
+            }}
+            onClick={toggleDrawer(anchor, true)}
+          />
+          <Drawer
+            sx={{
+              width: "100vw",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+            anchor={anchor}
+            open={state[anchor]}
+            onClose={toggleDrawer(anchor, false)}
+          >
+            <ListSideBar />
+            <Box
+              className="css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop"
+              onClick={toggleDrawer(anchor, false)}
+            >
+              <CloseRoundedIcon
+                sx={{
+                  position: "absolute",
+                  top: 10,
+                  right: 10,
+                  cursor: "pointer",
+                  color: "white",
+                  opacity: state[anchor] ? 0.6 : 0,
+                  transition: "all 0.2s linear",
+                  transform: state[anchor]
+                    ? "translateY(0)"
+                    : "translateY(120%)",
+                  "&:hover": {
+                    opacity: 1,
+                  },
+                }}
+                fontSize="medium"
+                onClick={toggleDrawer(anchor, false)}
+              />
+            </Box>
+          </Drawer>
+        </Fragment>
+      ))}
 
       <Link
         to="/"
@@ -209,24 +275,18 @@ function Header() {
             />
           </Tooltip>
         </Box>
-        <Link style={{ m: 0, p: 0 }} to="/sign-in">
-          <Tooltip title="Đăng xuất">
-            <Button
-              sx={{
-                color: (theme) =>
-                  theme.palette.mode === "light" ? "black" : "#fff",
-                borderRadius: 3,
-              }}
-              onClick={() => {
-                setIsSignedIn(false);
-                localStorage.removeItem(`${secret_key}`);
-                localStorage.removeItem("current_userId");
-              }}
-            >
-              <LogoutRoundedIcon fontSize="small" />
-            </Button>
-          </Tooltip>
-        </Link>
+        <Tooltip title="Đăng xuất">
+          <Button
+            sx={{
+              color: (theme) =>
+                theme.palette.mode === "light" ? "black" : "#fff",
+              borderRadius: 3,
+            }}
+            onClick={handleLogOut}
+          >
+            <LogoutRoundedIcon fontSize="small" />
+          </Button>
+        </Tooltip>
       </Box>
     </Box>
   );
