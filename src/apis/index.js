@@ -11,6 +11,11 @@ export const getUserInfo = async () => {
   return response.data;
 };
 
+export const getUserInfoById = async (id) => {
+  const response = await axios.get(`${url}/${id}`);
+  return response.data;
+};
+
 export const postUserInfo = async (data) => {
   const response = await axios.post(`${url}`, JSON.stringify(data), {
     headers,

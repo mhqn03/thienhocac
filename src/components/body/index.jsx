@@ -9,43 +9,43 @@ const MediaDetails = () => {
   const [media, setMedia] = useState([
     {
       _id: 1,
-      coverUrl:
-        "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/2.jpg",
+      mediaUrl:
+        "https://res.cloudinary.com/daiiinchx/image/upload/v1703954654/thien%20ho%20cac/z5025563400886_d73bbe24ba3cde96b3b16ce9abb2cd24_zn1w29.jpg",
       title: "image",
     },
     {
       _id: 2,
-      coverUrl:
-        "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/23.jpg",
+      mediaUrl:
+        "https://res.cloudinary.com/daiiinchx/image/upload/v1703954770/thien%20ho%20cac/z5025565133606_aa4d72f0f3408ed98f2e3c453cb90232_nc8vkp.jpg",
       title: "image",
     },
     {
       _id: 3,
-      coverUrl:
+      mediaUrl:
         "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/21.jpg",
       title: "image",
     },
     {
       _id: 4,
-      coverUrl:
+      mediaUrl:
         "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/59.jpg",
       title: "image",
     },
     {
       _id: 5,
-      coverUrl:
+      mediaUrl:
         "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/102.jpg",
       title: "image",
     },
     {
       _id: 6,
-      coverUrl:
+      mediaUrl:
         "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1233.jpg",
       title: "image",
     },
     {
       _id: 7,
-      coverUrl:
+      mediaUrl:
         "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/555.jpg",
       title: "image",
     },
@@ -61,13 +61,14 @@ const MediaDetails = () => {
                 marginBottom: "12px",
                 display: "flex",
                 flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
                 gap: 10,
               }}
               item
               container
-              xs={12}
-              sm={6}
-              md={4}
+              def={6}
+              sm={4}
               lg={3}
               key={item._id}
             >
@@ -76,10 +77,22 @@ const MediaDetails = () => {
                   <CardMedia
                     component="img"
                     alt="Album Image"
-                    height="200"
-                    width="200"
-                    image={item.coverUrl}
-                    sx={{ borderRadius: 8 }}
+                    image={item.mediaUrl}
+                    sx={{
+                      borderRadius: 2,
+                      height: {
+                        def: "200px",
+                        sm: "230px",
+                        md: "280px",
+                        lg: "300px",
+                      },
+                      width: {
+                        def: "140px",
+                        sm: "170px",
+                        md: "220px",
+                        lg: "240px",
+                      },
+                    }}
                   />
                 </Box>
                 <Typography variant="span" id="titleMedia">

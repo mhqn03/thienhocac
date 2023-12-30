@@ -17,6 +17,10 @@ import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import Drawer from "@mui/material/Drawer";
 import { useConfirm } from "material-ui-confirm";
 import { ListSideBar } from "./mobile-side-bar";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
 import { AuthContext } from "../authProtect/AuthProtect";
 
 function Header() {
@@ -51,11 +55,6 @@ function Header() {
       description: "Bạn có muốn đăng xuất?",
       confirmationText: "Có",
       cancellationText: "Không",
-      dialogProps: {
-        sx: {
-          borderRadius: "13px",
-        },
-      },
     })
       .then(() => {
         setIsSignedIn(false);
@@ -65,6 +64,37 @@ function Header() {
       })
       .catch(() => {});
   };
+
+  const [type, setType] = useState({
+    ["Bàn ghế"]: false,
+    ["Đôn kê"]: false,
+    ["Tủ"]: false,
+    ["Tượng gỗ"]: false,
+    ["Tiểu cảnh"]: false,
+  });
+
+  const handleClickListItemButton = (item) => {
+    setType((prevState) => {
+      const updatedType = {
+        ...prevState,
+        [item]: !prevState[item],
+      };
+
+      const allValuesAreTrue = Object.values(updatedType).every(
+        (value) => value === true
+      );
+
+      if (allValuesAreTrue) {
+        return Object.fromEntries(
+          Object.keys(updatedType).map((key) => [key, false])
+        );
+      }
+
+      return updatedType;
+    });
+  };
+
+  console.log(type);
 
   return (
     <Box
@@ -97,7 +127,15 @@ function Header() {
             open={state[anchor]}
             onClose={toggleDrawer(anchor, false)}
           >
-            <ListSideBar />
+            <ListSideBar
+              state={state}
+              setState={setState}
+              anchor={anchor}
+              type={type}
+              setType={setType}
+              searchValue={searchValue}
+              setSearchValue={setSearchValue}
+            />
             <Box
               className="css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop"
               onClick={toggleDrawer(anchor, false)}
@@ -158,9 +196,37 @@ function Header() {
           Thiên Hồ Các
         </Typography>
       </Link>
+      <List
+        sx={{
+          display: { def: "none", md: "flex" },
+        }}
+      >
+        {["Bàn ghế", "Đôn kê", "Tủ", "Tượng gỗ", "Tiểu cảnh"].map(
+          (item, index) => (
+            <ListItem
+              key={index}
+              sx={{
+                width: "max-content",
+                paddingLeft: { xs: 0, lg: "8px" },
+                paddingRight: { xs: 0, md: "8px" },
+              }}
+            >
+              <ListItemButton onClick={() => handleClickListItemButton(item)}>
+                <ListItemText
+                  primary={item}
+                  sx={{
+                    color: (theme) =>
+                      type[item] ? `${theme.palette.secondary.main}` : "",
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
+          )
+        )}
+      </List>
       <TextField
         id="outlined-search"
-        label="Search..."
+        label="Nhập mã sản phẩm"
         name="search"
         type="text"
         size="small"
@@ -210,7 +276,7 @@ function Header() {
           display: { def: "none", xs: "inline-flex" },
           maxWidth: 600,
           minWidth: 50,
-          width: { xs: 200, sm: 300, md: 450, lg: 600 },
+          width: { xs: 180, md: 220, lg: 400 },
           label: {
             fontSize: 12,
             color: (theme) =>

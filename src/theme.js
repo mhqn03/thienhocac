@@ -61,6 +61,32 @@ const theme = extendTheme({
         },
       },
     },
+    MuiList: {
+      styleOverrides: {
+        root: {
+          paddingTop: 0,
+          paddingBottom: 0,
+          marginTop: 0,
+          marginBottom: 0,
+        },
+      },
+    },
+    MuiListItem: {
+      styleOverrides: {
+        root: {
+          paddingTop: 0,
+          paddingBottom: 0,
+          marginTop: 0,
+          marginBottom: 0,
+          ".css-17h9zjm-MuiButtonBase-root-MuiListItemButton-root": {
+            borderRadius: "13px",
+            ".css-tlelie-MuiListItemText-root": {
+              margin: 0,
+            },
+          },
+        },
+      },
+    },
     MuiInputLabel: {
       styleOverrides: {
         root: { fontSize: "0.875rem" },
