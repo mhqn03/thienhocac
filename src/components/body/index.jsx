@@ -1,60 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import { getMedia } from "~/apis";
+import ModalDetailMedia from "../modalDetailMedia";
 
-const MediaDetails = () => {
-  const [media, setMedia] = useState([
-    {
-      _id: 1,
-      mediaUrl:
-        "https://res.cloudinary.com/daiiinchx/image/upload/v1703954654/thien%20ho%20cac/z5025563400886_d73bbe24ba3cde96b3b16ce9abb2cd24_zn1w29.jpg",
-      title: "image",
-    },
-    {
-      _id: 2,
-      mediaUrl:
-        "https://res.cloudinary.com/daiiinchx/image/upload/v1703954770/thien%20ho%20cac/z5025565133606_aa4d72f0f3408ed98f2e3c453cb90232_nc8vkp.jpg",
-      title: "image",
-    },
-    {
-      _id: 3,
-      mediaUrl:
-        "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/21.jpg",
-      title: "image",
-    },
-    {
-      _id: 4,
-      mediaUrl:
-        "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/59.jpg",
-      title: "image",
-    },
-    {
-      _id: 5,
-      mediaUrl:
-        "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/102.jpg",
-      title: "image",
-    },
-    {
-      _id: 6,
-      mediaUrl:
-        "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1233.jpg",
-      title: "image",
-    },
-    {
-      _id: 7,
-      mediaUrl:
-        "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/555.jpg",
-      title: "image",
-    },
-  ]);
+const MediaDetails = ({
+  type,
+  setType,
+  searchValue,
+  setSearchValue,
+  media,
+  setMedia,
+}) => {
+  const [open, setOpen] = useState(false);
+  const [mediaClicked, setMediaClicked] = useState(null);
+  useEffect(() => {
+    (async () => {
+      const result = await getMedia();
+      setMedia(result);
+    })();
+  }, [setMedia]);
+
+  // console.log(media);
+  // console.log(type);
 
   return (
     <Box>
       <Container maxWidth="lg">
-        <Grid container spacing={4}>
+        <Grid
+          container
+          spacing={4}
+          sx={{
+            paddingBottom: "2rem",
+          }}
+        >
           {media?.map((item, index) => (
             <Grid
               sx={{
@@ -70,14 +52,22 @@ const MediaDetails = () => {
               def={6}
               sm={4}
               lg={3}
-              key={item._id}
+              key={item.id}
             >
-              <Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: 1,
+                }}
+              >
                 <Box sx={{ cursor: "pointer", m: 0, p: 0 }}>
                   <CardMedia
                     component="img"
                     alt="Album Image"
-                    image={item.mediaUrl}
+                    image={item.thumbnail}
                     sx={{
                       borderRadius: 2,
                       height: {
@@ -93,11 +83,70 @@ const MediaDetails = () => {
                         lg: "240px",
                       },
                     }}
+                    onClick={() => {
+                      setOpen(true);
+                      setMediaClicked(item);
+                    }}
                   />
+                  {open && (
+                    <ModalDetailMedia
+                      open={open}
+                      setOpen={setOpen}
+                      media={mediaClicked}
+                    />
+                  )}
                 </Box>
-                <Typography variant="span" id="titleMedia">
-                  {item.title}
-                </Typography>
+                <Box
+                  sx={{
+                    fontSize: "14px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      gap: 1,
+                    }}
+                  >
+                    <Typography
+                      variant="span"
+                      id="skuMedia"
+                      sx={{
+                        fontWeight: "200",
+                        opacity: "0.9",
+                        fontSize: { def: "12px", md: "16px" },
+                      }}
+                    >
+                      {item.type}
+                    </Typography>
+                    <Typography
+                      variant="span"
+                      id="skuMedia"
+                      sx={{
+                        fontWeight: "200",
+                        opacity: "0.9",
+                        fontSize: { def: "12px", md: "16px" },
+                      }}
+                    >
+                      (mã: {item.SKU})
+                    </Typography>
+                  </Box>
+                  <Typography
+                    variant="span"
+                    id="parameterMedia"
+                    sx={{
+                      fontSize: { def: "12px", md: "16px" },
+                    }}
+                  >
+                    {`${item.name} (${item.substance})`} <br />
+                    {`Kích thước: ${item.size}`}
+                    <br />
+                    {`Giá: ${item.price}`}
+                  </Typography>
+                </Box>
               </Box>
             </Grid>
           ))}

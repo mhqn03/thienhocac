@@ -1,8 +1,36 @@
 import Box from "@mui/material/Box";
+import { useState } from "react";
 import MediaDetails from "~/components/body";
 import Header from "~/components/header";
+import "ldrs/dotSpinner";
 
 function Home() {
+  const [media, setMedia] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
+  const [type, setType] = useState({
+    ["Bàn ghế"]: false,
+    ["Đôn kê"]: false,
+    ["Tủ"]: false,
+    ["Tượng gỗ"]: false,
+    ["Tiểu cảnh"]: false,
+  });
+
+  if (!media) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          width: "100vw",
+        }}
+      >
+        <l-dot-spinner size="40" speed="0.9" color="#00000080" />
+      </Box>
+    );
+  }
+
   return (
     <Box
       sx={{
@@ -28,9 +56,15 @@ function Home() {
           boxShadow: "0px 6px 10px -6px rgba(1, 1, 1, 0.5)",
           position: "fixed",
           top: 0,
+          zIndex: 1000,
         }}
       >
-        <Header />
+        <Header
+          type={type}
+          setType={setType}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+        />
       </Box>
 
       <Box
@@ -39,7 +73,14 @@ function Home() {
           height: { def: "calc(100vh - 3.2rem)", md: "calc(100vh - 4rem)" },
         }}
       >
-        <MediaDetails />
+        <MediaDetails
+          type={type}
+          setType={setType}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          media={media}
+          setMedia={setMedia}
+        />
       </Box>
     </Box>
   );

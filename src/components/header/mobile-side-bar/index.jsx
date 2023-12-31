@@ -62,10 +62,6 @@ export const ListSideBar = ({
       }
       return updatedType;
     });
-  };
-
-  const handleListItemClick = (item) => () => {
-    handleClickListItemButton(item);
     setState({ ...state, [anchor]: false });
   };
 
@@ -187,7 +183,7 @@ export const ListSideBar = ({
             }}
           >
             <ListItemButton
-              onClick={handleListItemClick(item.text, anchor)}
+              onClick={() => handleClickListItemButton(item.text)}
               onKeyDown={toggleDrawer(anchor, false)}
             >
               <ListItemIcon>{item.icon}</ListItemIcon>

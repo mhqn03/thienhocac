@@ -23,11 +23,10 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { AuthContext } from "../authProtect/AuthProtect";
 
-function Header() {
+function Header({ type, setType, searchValue, setSearchValue }) {
   const { mode, setMode } = useColorScheme();
   const { setIsSignedIn } = useContext(AuthContext);
   const secret_key = import.meta.env.VITE_SECRET_KEY;
-  const [searchValue, setSearchValue] = useState("");
   const inputRef = useRef(null);
   const handleClick = () => {
     inputRef.current.focus();
@@ -65,14 +64,6 @@ function Header() {
       .catch(() => {});
   };
 
-  const [type, setType] = useState({
-    ["Bàn ghế"]: false,
-    ["Đôn kê"]: false,
-    ["Tủ"]: false,
-    ["Tượng gỗ"]: false,
-    ["Tiểu cảnh"]: false,
-  });
-
   const handleClickListItemButton = (item) => {
     setType((prevState) => {
       const updatedType = {
@@ -93,8 +84,6 @@ function Header() {
       return updatedType;
     });
   };
-
-  console.log(type);
 
   return (
     <Box
