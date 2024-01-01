@@ -82,6 +82,10 @@ const MediaDetails = ({
                         md: "220px",
                         lg: "240px",
                       },
+                      transition: "all .2s linear",
+                      "&:hover": {
+                        transform: "scale(1.04)",
+                      },
                     }}
                     onClick={() => {
                       setOpen(true);
