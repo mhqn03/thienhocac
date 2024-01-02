@@ -16,6 +16,7 @@ import HomeMiniRoundedIcon from "@mui/icons-material/HomeMiniRounded";
 import KitchenRoundedIcon from "@mui/icons-material/KitchenRounded";
 import Man2RoundedIcon from "@mui/icons-material/Man2Rounded";
 import VrpanoIcon from "@mui/icons-material/Vrpano";
+import OpenInNewRoundedIcon from "@mui/icons-material/OpenInNewRounded";
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
@@ -174,6 +175,7 @@ export const ListSideBar = ({
           { text: "Tủ", icon: <KitchenRoundedIcon /> },
           { text: "Tượng gỗ", icon: <Man2RoundedIcon /> },
           { text: "Tiểu cảnh", icon: <VrpanoIcon /> },
+          { text: "Sản phẩm khác", icon: <OpenInNewRoundedIcon /> },
         ].map((item, index) => (
           <ListItem
             key={index}

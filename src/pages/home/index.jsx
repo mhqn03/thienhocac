@@ -1,8 +1,9 @@
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import { useState } from "react";
 import MediaDetails from "~/components/body";
 import Header from "~/components/header";
 import "ldrs/dotSpinner";
+import { getMedia } from "~/apis";
 
 function Home() {
   const [media, setMedia] = useState([]);
@@ -13,7 +14,14 @@ function Home() {
     ["Tủ"]: false,
     ["Tượng gỗ"]: false,
     ["Tiểu cảnh"]: false,
+    ["Sản phẩm khác"]: false,
   });
+  useEffect(() => {
+    (async () => {
+      const result = await getMedia();
+      setMedia(result);
+    })();
+  }, [setMedia]);
 
   if (!media) {
     return (
@@ -79,7 +87,6 @@ function Home() {
           searchValue={searchValue}
           setSearchValue={setSearchValue}
           media={media}
-          setMedia={setMedia}
         />
       </Box>
     </Box>

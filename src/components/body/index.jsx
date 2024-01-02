@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { getMedia } from "~/apis";
 import ModalDetailMedia from "../modalDetailMedia";
 
 const MediaDetails = ({
@@ -13,18 +12,10 @@ const MediaDetails = ({
   searchValue,
   setSearchValue,
   media,
-  setMedia,
 }) => {
   const [open, setOpen] = useState(false);
   const [mediaClicked, setMediaClicked] = useState(null);
-  useEffect(() => {
-    (async () => {
-      const result = await getMedia();
-      setMedia(result);
-    })();
-  }, [setMedia]);
 
-  // console.log(media);
   // console.log(type);
 
   return (
@@ -63,7 +54,9 @@ const MediaDetails = ({
                   gap: 1,
                 }}
               >
-                <Box sx={{ cursor: "pointer", m: 0, p: 0 }}>
+                <Box
+                  sx={{ cursor: "pointer", m: 0, p: 0, position: "relative" }}
+                >
                   <CardMedia
                     component="img"
                     alt="Album Image"
@@ -84,7 +77,7 @@ const MediaDetails = ({
                       },
                       transition: "all .2s linear",
                       "&:hover": {
-                        transform: "scale(1.04)",
+                        transform: "scale(0.98)",
                       },
                     }}
                     onClick={() => {
@@ -92,6 +85,24 @@ const MediaDetails = ({
                       setMediaClicked(item);
                     }}
                   />
+                  {item["out-of-stock"] && (
+                    <Typography
+                      variant="p"
+                      sx={{
+                        fontSize: "16px",
+                        position: "absolute",
+                        top: "10%",
+                        left: "6%",
+                        padding: { def: "5px", md: "7px", lg: "10px" },
+                        bgcolor: "#6aa9abc2",
+                        borderRadius: "20px",
+                        color: "white",
+                      }}
+                    >
+                      Hết hàng!
+                    </Typography>
+                  )}
+
                   {open && (
                     <ModalDetailMedia
                       open={open}

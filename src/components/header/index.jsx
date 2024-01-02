@@ -190,28 +190,32 @@ function Header({ type, setType, searchValue, setSearchValue }) {
           display: { def: "none", md: "flex" },
         }}
       >
-        {["Bàn ghế", "Đôn kê", "Tủ", "Tượng gỗ", "Tiểu cảnh"].map(
-          (item, index) => (
-            <ListItem
-              key={index}
-              sx={{
-                width: "max-content",
-                paddingLeft: { xs: 0, lg: "8px" },
-                paddingRight: { xs: 0, md: "8px" },
-              }}
-            >
-              <ListItemButton onClick={() => handleClickListItemButton(item)}>
-                <ListItemText
-                  primary={item}
-                  sx={{
-                    color: (theme) =>
-                      type[item] ? `${theme.palette.secondary.main}` : "",
-                  }}
-                />
-              </ListItemButton>
-            </ListItem>
-          )
-        )}
+        {[
+          "Bàn ghế",
+          "Đôn kê",
+          "Tủ",
+          "Tượng gỗ",
+          "Tiểu cảnh",
+          "Sản phẩm khác",
+        ].map((item, index) => (
+          <ListItem
+            key={index}
+            sx={{
+              width: "max-content",
+              p: 0,
+            }}
+          >
+            <ListItemButton onClick={() => handleClickListItemButton(item)}>
+              <ListItemText
+                primary={item}
+                sx={{
+                  color: (theme) =>
+                    type[item] ? `${theme.palette.secondary.main}` : "",
+                }}
+              />
+            </ListItemButton>
+          </ListItem>
+        ))}
       </List>
       <TextField
         id="outlined-search"
@@ -265,7 +269,7 @@ function Header({ type, setType, searchValue, setSearchValue }) {
           display: { def: "none", xs: "inline-flex" },
           maxWidth: 600,
           minWidth: 50,
-          width: { xs: 180, md: 220, lg: 400 },
+          width: { xs: 180, md: 153, lg: 400 },
           label: {
             fontSize: 12,
             color: (theme) =>
