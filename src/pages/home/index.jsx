@@ -3,9 +3,11 @@ import Box from "@mui/material/Box";
 import MediaDetails from "~/components/body";
 import Header from "~/components/header";
 import "ldrs/dotSpinner";
+import { useColorScheme } from "@mui/material/styles";
 import { getMedia } from "~/apis";
 
 function Home() {
+  const { mode } = useColorScheme();
   const [media, setMedia] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [type, setType] = useState({
@@ -34,7 +36,11 @@ function Home() {
           width: "100vw",
         }}
       >
-        <l-dot-spinner size="40" speed="0.9" color="#00000080" />
+        <l-dot-spinner
+          size="40"
+          speed="0.9"
+          color={mode === "dark" ? "white" : "#00000080"}
+        />
       </Box>
     );
   }
