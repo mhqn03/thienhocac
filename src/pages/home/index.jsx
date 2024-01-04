@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Box from "@mui/material/Box";
 import MediaDetails from "~/components/body";
 import Header from "~/components/header";
@@ -24,6 +24,29 @@ function Home() {
       setMedia(result);
     })();
   }, [setMedia]);
+
+  const filterDataByType = useMemo(
+    () =>
+      media.filter((data) => {
+        const keyOfType = Object.keys(type);
+        return keyOfType.some((key) => type[key] && data.type === key);
+      }),
+    [media, type]
+  );
+  const filterDataBySearch = useMemo(
+    () =>
+      media.filter((data) =>
+        data.SKU.toLowerCase().includes(searchValue.toLowerCase())
+      ),
+    [media, searchValue]
+  );
+  const filterDataBySearchWithType = useMemo(
+    () =>
+      filterDataByType.filter((data) =>
+        data.SKU.toLowerCase().includes(searchValue.toLowerCase())
+      ),
+    [filterDataByType, searchValue]
+  );
 
   if (!media) {
     return (
@@ -89,10 +112,11 @@ function Home() {
       >
         <MediaDetails
           type={type}
-          setType={setType}
           searchValue={searchValue}
-          setSearchValue={setSearchValue}
           media={media}
+          filterDataBySearch={filterDataBySearch}
+          filterDataByType={filterDataByType}
+          filterDataBySearchWithType={filterDataBySearchWithType}
         />
       </Box>
     </Box>
