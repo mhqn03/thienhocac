@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Box from "@mui/material/Box";
 import MediaDetails from "~/components/body";
 import Header from "~/components/header";
 import "ldrs/dotSpinner";
+import { useColorScheme } from "@mui/material/styles";
 import { getMedia } from "~/apis";
 
 function Home() {
+  const { mode } = useColorScheme();
   const [media, setMedia] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [type, setType] = useState({
@@ -23,6 +25,29 @@ function Home() {
     })();
   }, [setMedia]);
 
+  const filterDataByType = useMemo(
+    () =>
+      media.filter((data) => {
+        const keyOfType = Object.keys(type);
+        return keyOfType.some((key) => type[key] && data.type === key);
+      }),
+    [media, type]
+  );
+  const filterDataBySearch = useMemo(
+    () =>
+      media.filter((data) =>
+        data.SKU.toLowerCase().includes(searchValue.toLowerCase())
+      ),
+    [media, searchValue]
+  );
+  const filterDataBySearchWithType = useMemo(
+    () =>
+      filterDataByType.filter((data) =>
+        data.SKU.toLowerCase().includes(searchValue.toLowerCase())
+      ),
+    [filterDataByType, searchValue]
+  );
+
   if (!media) {
     return (
       <Box
@@ -34,7 +59,11 @@ function Home() {
           width: "100vw",
         }}
       >
-        <l-dot-spinner size="40" speed="0.9" color="#00000080" />
+        <l-dot-spinner
+          size="40"
+          speed="0.9"
+          color={mode === "dark" ? "white" : "#00000080"}
+        />
       </Box>
     );
   }
@@ -83,10 +112,11 @@ function Home() {
       >
         <MediaDetails
           type={type}
-          setType={setType}
           searchValue={searchValue}
-          setSearchValue={setSearchValue}
           media={media}
+          filterDataBySearch={filterDataBySearch}
+          filterDataByType={filterDataByType}
+          filterDataBySearchWithType={filterDataBySearchWithType}
         />
       </Box>
     </Box>

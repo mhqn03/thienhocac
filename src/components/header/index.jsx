@@ -328,7 +328,7 @@ function Header({ type, setType, searchValue, setSearchValue }) {
                 <MaterialUISwitch
                   sx={{ my: 0 }}
                   size="small"
-                  defaultChecked={mode === "light" ? true : false}
+                  checked={mode === "light" ? true : false}
                 />
               }
             />
