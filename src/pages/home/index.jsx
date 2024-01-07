@@ -27,10 +27,9 @@ function Home() {
 
   const filterDataByType = useMemo(
     () =>
-      media.filter((data) => {
-        const keyOfType = Object.keys(type);
-        return keyOfType.some((key) => type[key] && data.type === key);
-      }),
+      media.filter((data) =>
+        Object.keys(type).some((key) => type[key] && data.type === key)
+      ),
     [media, type]
   );
   const filterDataBySearch = useMemo(
