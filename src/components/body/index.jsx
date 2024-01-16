@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Details from "./details";
@@ -11,8 +10,6 @@ const MediaDetails = ({
   filterDataByType,
   filterDataBySearchWithType,
 }) => {
-  const [open, setOpen] = useState(false);
-  const [mediaClicked, setMediaClicked] = useState(null);
   const valueOfType = Object.values(type).some((value) => value === true);
 
   return (
@@ -26,46 +23,16 @@ const MediaDetails = ({
       >
         {!valueOfType
           ? !searchValue
-            ? media?.map((item, index) => (
-                <Details
-                  key={item.id}
-                  item={item}
-                  open={open}
-                  setOpen={setOpen}
-                  mediaClicked={mediaClicked}
-                  setMediaClicked={setMediaClicked}
-                />
-            ))
+            ? media?.map((item, index) => <Details key={item.id} item={item} />)
             : filterDataBySearch?.map((item, index) => (
-                <Details
-                  key={item.id}
-                  item={item}
-                  open={open}
-                  setOpen={setOpen}
-                  mediaClicked={mediaClicked}
-                  setMediaClicked={setMediaClicked}
-                />
+                <Details key={item.id} item={item} />
             ))
           : !searchValue
             ? filterDataByType?.map((item, index) => (
-              <Details
-                key={item.id}
-                item={item}
-                open={open}
-                setOpen={setOpen}
-                mediaClicked={mediaClicked}
-                setMediaClicked={setMediaClicked}
-              />
+              <Details key={item.id} item={item} />
             ))
             : filterDataBySearchWithType?.map((item, index) => (
-              <Details
-                key={item.id}
-                item={item}
-                open={open}
-                setOpen={setOpen}
-                mediaClicked={mediaClicked}
-                setMediaClicked={setMediaClicked}
-              />
+              <Details key={item.id} item={item} />
             ))}
       </Grid>
     </Container>
