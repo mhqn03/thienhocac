@@ -1,10 +1,13 @@
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import ModalDetailMedia from "../modalDetailMedia";
 
-const Details = ({ item, open, setOpen, mediaClicked, setMediaClicked }) => {
+const Details = ({ item }) => {
+  const [open, setOpen] = useState(false);
+  const [mediaClicked, setMediaClicked] = useState(null);
   return (
     <Grid
       sx={{
