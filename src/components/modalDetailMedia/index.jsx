@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
@@ -8,7 +9,6 @@ import "react-image-gallery/styles/css/image-gallery.css";
 import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import emailjs from "@emailjs/browser";
 import { toast } from "react-toastify";
