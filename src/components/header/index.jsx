@@ -126,7 +126,7 @@ function Header({ type, setType, searchValue, setSearchValue }) {
               setSearchValue={setSearchValue}
             />
             <Box
-              className="css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop"
+              className="css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop css-919eu4"
               onClick={toggleDrawer(anchor, false)}
             >
               <CloseRoundedIcon
