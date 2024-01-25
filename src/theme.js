@@ -78,12 +78,13 @@ const theme = extendTheme({
           paddingBottom: 0,
           marginTop: 0,
           marginBottom: 0,
-          ".css-17h9zjm-MuiButtonBase-root-MuiListItemButton-root": {
-            borderRadius: "13px",
-            ".css-tlelie-MuiListItemText-root": {
-              margin: 0,
+          ".css-17h9zjm-MuiButtonBase-root-MuiListItemButton-root, .css-1sol1on":
+            {
+              borderRadius: "13px",
+              ".css-tlelie-MuiListItemText-root": {
+                margin: 0,
+              },
             },
-          },
         },
       },
     },
