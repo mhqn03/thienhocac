@@ -25,7 +25,7 @@ const MediaDetails = ({
           ? !searchValue
             ? media?.map((item, index) => <Details key={item.id} item={item} />)
             : filterDataBySearch?.map((item, index) => (
-                <Details key={item.id} item={item} />
+              <Details key={item.id} item={item} />
             ))
           : !searchValue
             ? filterDataByType?.map((item, index) => (
