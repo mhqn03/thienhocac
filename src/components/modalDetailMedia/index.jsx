@@ -4,10 +4,11 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
-import ImageGallery from "react-image-gallery";
-import "react-image-gallery/styles/css/image-gallery.css";
-import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
-import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+// import ImageGallery from "react-image-gallery";
+// import "react-image-gallery/styles/css/image-gallery.css";
+// import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
+// import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+import EmblaCarousel from "../emblaCarouselLoop";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import Tooltip from "@mui/material/Tooltip";
 import emailjs from "@emailjs/browser";
@@ -39,21 +40,22 @@ const style = {
 
 const ModalDetailMedia = ({ open, setOpen, media }) => {
   const handleClose = () => setOpen(false);
-  const customStyles = {
-    position: "absolute",
-    top: "50%",
-    transform: "translateY(-50%)",
-    cursor: "pointer",
-    fontSize: "24px",
-    color: "white",
-    zIndex: 1000,
-  };
+  // const customStyles = {
+  //   position: "absolute",
+  //   top: "50%",
+  //   transform: "translateY(-50%)",
+  //   cursor: "pointer",
+  //   fontSize: "24px",
+  //   color: "white",
+  //   zIndex: 1000,
+  // };
   const [images, setImages] = useState([]);
   const inputNameRef = useRef();
   const inputNumberRef = useRef();
   const inputEmailRef = useRef();
   useEffect(() => {
-    setImages(media.detailUrl?.map((item) => ({ original: item })));
+    // setImages(media.detailUrl?.map((item) => ({ original: item })));
+    setImages(media.detailUrl);
   }, [media]);
 
   const form = useRef();
@@ -103,6 +105,9 @@ const ModalDetailMedia = ({ open, setOpen, media }) => {
         );
     }
   };
+  const OPTIONS = { loop: true };
+  const SLIDE_COUNT = media.detailUrl?.length;
+  const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
 
   return (
     <Box>
@@ -144,47 +149,47 @@ const ModalDetailMedia = ({ open, setOpen, media }) => {
               display: "flex",
               flexDirection: { def: "column", lg: "row" },
               gap: { def: 1, md: 2 },
-              ".image-gallery": {
-                width: { def: "100%", lg: "80%" },
-                ".image-gallery-slide-wrapper": {
-                  ".css-3mhmj0 svg": {
-                    opacity: 0,
-                    transform: "translateX(40%)",
-                    transition: "all 0.2s ease-in-out",
-                  },
-                  ".css-qm0hdc svg": {
-                    opacity: 0,
-                    transform: "translateX(-40%)",
-                    transition: "all 0.2s ease-in-out",
-                  },
-                  "&:hover .css-3mhmj0 svg, &:hover .css-qm0hdc svg": {
-                    opacity: 0.5,
-                    transform: "translateX(0)",
-                    "&:hover": {
-                      opacity: 1,
-                    },
-                  },
-                  ".image-gallery-slides": {
-                    borderRadius: "10px",
-                    backgroundColor: "black",
-                    // ".image-gallery-slide img": {},
-                  },
-                  ".image-gallery-fullscreen-button": {
-                    height: "100%",
-                    width: "100%",
-                    opacity: 0,
-                  },
-                  ".image-gallery-index": {
-                    padding: 1,
-                    fontSize: 12,
-                    borderRadius: "8px",
-                    background: "rgba(0,0,0,.3)",
-                  },
-                },
-              },
+              // ".image-gallery": {
+              //   width: { def: "100%", lg: "80%" },
+              //   ".image-gallery-slide-wrapper": {
+              //     ".css-3mhmj0 svg": {
+              //       opacity: 0,
+              //       transform: "translateX(40%)",
+              //       transition: "all 0.2s ease-in-out",
+              //     },
+              //     ".css-qm0hdc svg": {
+              //       opacity: 0,
+              //       transform: "translateX(-40%)",
+              //       transition: "all 0.2s ease-in-out",
+              //     },
+              //     "&:hover .css-3mhmj0 svg, &:hover .css-qm0hdc svg": {
+              //       opacity: 0.5,
+              //       transform: "translateX(0)",
+              //       "&:hover": {
+              //         opacity: 1,
+              //       },
+              //     },
+              //     ".image-gallery-slides": {
+              //       borderRadius: "10px",
+              //       backgroundColor: "black",
+              //       // ".image-gallery-slide img": {},
+              //     },
+              //     ".image-gallery-fullscreen-button": {
+              //       height: "100%",
+              //       width: "100%",
+              //       opacity: 0,
+              //     },
+              //     ".image-gallery-index": {
+              //       padding: 1,
+              //       fontSize: 12,
+              //       borderRadius: "8px",
+              //       background: "rgba(0,0,0,.3)",
+              //     },
+              //   },
+              // },
             }}
           >
-            <ImageGallery
+            {/* <ImageGallery
               items={images}
               autoPlay={false}
               showPlayButton={false}
@@ -206,15 +211,31 @@ const ModalDetailMedia = ({ open, setOpen, media }) => {
                   <ArrowForwardIosRoundedIcon />
                 </Box>
               )}
+            /> */}
+            <EmblaCarousel
+              slides={SLIDES}
+              options={OPTIONS}
+              images={images}
+              outOfStock={media["out-of-stock"]}
             />
             <Box
               sx={{
                 display: "flex",
                 flexDirection: { def: "column", md: "row", lg: "column" },
-                gap: { md: 13, lg: 0 },
+                justifyContent: !media["out-of-stock"] && "center",
+                gap: { sm: 0, md: 13 },
               }}
             >
-              <Typography id="modal-modal-description" sx={{ my: 2 }}>
+              <Typography
+                id="modal-modal-description"
+                sx={{
+                  my: 2,
+                  px: { md: "1rem", lg: 0 },
+                  width: media["out-of-stock"]
+                    ? { md: "20rem", lg: "12.8rem" }
+                    : "100%",
+                }}
+              >
                 <Typography
                   variant="p"
                   sx={{ fontSize: { def: "20px", lg: "16px" } }}
@@ -228,7 +249,11 @@ const ModalDetailMedia = ({ open, setOpen, media }) => {
                 {`Giá: ${media.price}`}
               </Typography>
               {!media["out-of-stock"] && (
-                <Box>
+                <Box
+                  sx={{
+                    px: { md: "1rem", lg: 0 },
+                  }}
+                >
                   <Typography variant="h6">Liên hệ</Typography>
                   <form
                     ref={form}
