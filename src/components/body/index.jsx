@@ -17,9 +17,6 @@ const MediaDetails = ({
       <Grid
         container
         spacing={4}
-        sx={{
-          paddingBottom: "2rem",
-        }}
       >
         {!valueOfType
           ? !searchValue
