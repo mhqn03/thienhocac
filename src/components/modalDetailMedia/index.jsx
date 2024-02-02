@@ -29,6 +29,7 @@ const style = {
     bgcolor: (theme) => (theme.palette.mode === "light" ? "#383838" : ""),
   },
   boxShadow: 24,
+  outline: "none",
   borderRadius: "8px",
   border: "unset",
   p: 4,
@@ -216,6 +217,7 @@ const ModalDetailMedia = ({ open, setOpen, media }) => {
               slides={SLIDES}
               options={OPTIONS}
               images={images}
+              thumbnail={media.thumbnail}
               outOfStock={media["out-of-stock"]}
             />
             <Box

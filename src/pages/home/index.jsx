@@ -71,22 +71,16 @@ function Home() {
     <Box
       sx={{
         height: "100vh",
-        overflow: "auto",
-        "&::-webkit-scrollbar-thumb": {
-          bgcolor: (theme) =>
-            theme.palette.mode === "light" ? "#00000090" : "",
-        },
-        "&::-webkit-scrollbar-thumb:hover": {
-          bgcolor: (theme) => (theme.palette.mode === "light" ? "#383838" : ""),
-        },
+        width: "100vw",
         bgcolor: (theme) =>
           theme.palette.mode === "dark" ? "#2c3e50" : "#e0e0e0",
+        position: "relative",
       }}
     >
       <Box
         sx={{
           height: { def: "3.2rem", md: "4rem" },
-          width: "100vw",
+          width: "100%",
           bgcolor: (theme) =>
             theme.palette.mode === "dark" ? "#2c3e50" : "#e0e0e0",
           boxShadow: "0px 6px 10px -6px rgba(1, 1, 1, 0.5)",
@@ -105,8 +99,23 @@ function Home() {
 
       <Box
         sx={{
-          mt: { def: "5rem", md: "5.6rem" },
-          height: { def: "calc(100vh - 3.2rem)", md: "calc(100vh - 4rem)" },
+          height: {
+            def: "calc(100% - 3.2rem)",
+            md: "calc(100% - 4rem)",
+          },
+          width: "100%",
+          overflow: "auto",
+          "&::-webkit-scrollbar-thumb": {
+            bgcolor: (theme) =>
+              theme.palette.mode === "light" ? "#00000090" : "",
+          },
+          "&::-webkit-scrollbar-thumb:hover": {
+            bgcolor: (theme) =>
+              theme.palette.mode === "light" ? "#383838" : "",
+          },
+          position: "absolute",
+          top: { def: "3.2rem", md: "4rem" },
+          pt: "1.2rem",
         }}
       >
         <MediaDetails

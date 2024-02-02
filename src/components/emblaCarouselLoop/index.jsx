@@ -4,15 +4,13 @@ import useEmblaCarousel from "embla-carousel-react";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 
-const EmblaCarousel = ({ slides, options, images, outOfStock }) => {
+const EmblaCarousel = ({ slides, options, images, outOfStock, thumbnail }) => {
   const [emblaRef] = useEmblaCarousel(options);
   const imageByIndex = (index) => images[index % images.length];
-  const [fullScreen, setFullScreen] = useState(false);
   const checkUrlType = (url) => {
     const extension = url?.split(".").pop().toLowerCase();
     const imageExtensions = ["jpg", "jpeg", "png", "gif"];
     const videoExtensions = ["mp4", "avi", "mov", "mkv"];
-
     if (imageExtensions.includes(extension)) {
       return "image";
     } else if (videoExtensions.includes(extension)) {
@@ -25,6 +23,10 @@ const EmblaCarousel = ({ slides, options, images, outOfStock }) => {
   return (
     <Box
       sx={{
+        "--brand-primary": "rgb(138, 180, 248)",
+        "--brand-secondary": "rgb(193, 168, 226)",
+        "--text-body": "rgb(222, 222, 222)",
+        "--background-code-rgb-value": "12, 12, 12",
         "--slide-spacing": "1rem",
         "--slide-size": "100%",
         "--slide-height": {
@@ -62,16 +64,15 @@ const EmblaCarousel = ({ slides, options, images, outOfStock }) => {
             >
               <Box
                 sx={{
-                  width: "4.6rem",
-                  height: "4.6rem",
-                  zIndex: 9999,
+                  width: "3rem",
+                  height: "max-content",
+                  zIndex: 1,
                   position: "absolute",
-                  top: "0.6rem",
-                  right: "0.6rem",
-                  borderRadius: "50%",
+                  top: "0.4rem",
+                  right: "0.4rem",
+                  borderRadius: "13px",
                   backgroundColor:
-                    "rgba(var(--background-site-rgb-value), 0.85)",
-                  lineHeight: "4.6rem",
+                    "rgba(var(--background-code-rgb-value), 0.85)",
                   fontWeight: "900",
                   textAlign: "center",
                   pointerEvents: "none",
@@ -80,22 +81,15 @@ const EmblaCarousel = ({ slides, options, images, outOfStock }) => {
                 <Typography
                   variant="span"
                   sx={{
-                    color: "var(--brand-primary)",
+                    color: "var(--text-body)",
                     backgroundImage:
                       "linear-gradient(45deg, var(--brand-primary), var(--brand-secondary))",
                     backgroundClip: "text",
-                    WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
-                    fontSize: "1.6rem",
-                    display: "block",
-                    position: "absolute",
-                    top: "0",
-                    left: "0",
-                    right: "0",
-                    bottom: "0",
+                    fontSize: "1rem",
                   }}
                 >
-                  {index + 1}
+                  {index + 1}/{slides.length}
                 </Typography>
               </Box>
               {checkUrlType(imageByIndex(index)) === "image" ? (
@@ -110,7 +104,6 @@ const EmblaCarousel = ({ slides, options, images, outOfStock }) => {
                   component="img"
                   image={imageByIndex(index)}
                   alt="Details Image"
-                  onClick={() => setFullScreen(true)}
                 />
               ) : checkUrlType(imageByIndex(index)) === "video" ? (
                 <Box
@@ -122,33 +115,25 @@ const EmblaCarousel = ({ slides, options, images, outOfStock }) => {
                     objectFit: "cover",
                     borderRadius: "10px",
                   }}
+                  poster={thumbnail}
                   controls
                 >
                   <source src={imageByIndex(index)} type="video/mp4" />
                 </Box>
               ) : (
-                <Typography variant="span">Error image</Typography>
-              )}
-              {/* {fullScreen && (
-                <CardMedia
+                <Typography
                   sx={{
-                    position: "fixed",
-                    top: 0,
-                    left: 0,
+                    display: "block",
+                    height: "var(--slide-height)",
                     width: "100%",
-                    height: "100%",
-                    zIndex: 9999,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    backgroundColor: "rgba(0, 0, 0, .8)",
+                    objectFit: "cover",
+                    borderRadius: "10px",
                   }}
-                  onClick={() => setFullScreen(false)}
-                  component="img"
-                  image={imageByIndex(index)}
-                  alt="Details Image"
-                />
-              )} */}
+                  variant="span"
+                >
+                  Error image
+                </Typography>
+              )}
             </Box>
           ))}
         </Box>
