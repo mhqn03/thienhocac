@@ -111,86 +111,85 @@ const ModalDetailMedia = ({ open, setOpen, media }) => {
   const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
 
   return (
-    <Box>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography
-            id="modal-modal-title"
-            variant="h6"
-            component="h2"
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            {media.name} (Click vào từng ảnh để xem chi tiết)
-            <Tooltip title="Đóng" placement="right">
-              <CloseRoundedIcon
-                fontSize="medium"
-                sx={{
-                  cursor: "pointer",
-                  opacity: 0.7,
-                  transition: "all .2s linear",
-                  "&:hover": {
-                    opacity: 1,
-                  },
-                }}
-                onClick={handleClose}
-              />
-            </Tooltip>
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: { def: "column", lg: "row" },
-              gap: { def: 1, md: 2 },
-              // ".image-gallery": {
-              //   width: { def: "100%", lg: "80%" },
-              //   ".image-gallery-slide-wrapper": {
-              //     ".css-3mhmj0 svg": {
-              //       opacity: 0,
-              //       transform: "translateX(40%)",
-              //       transition: "all 0.2s ease-in-out",
-              //     },
-              //     ".css-qm0hdc svg": {
-              //       opacity: 0,
-              //       transform: "translateX(-40%)",
-              //       transition: "all 0.2s ease-in-out",
-              //     },
-              //     "&:hover .css-3mhmj0 svg, &:hover .css-qm0hdc svg": {
-              //       opacity: 0.5,
-              //       transform: "translateX(0)",
-              //       "&:hover": {
-              //         opacity: 1,
-              //       },
-              //     },
-              //     ".image-gallery-slides": {
-              //       borderRadius: "10px",
-              //       backgroundColor: "black",
-              //       // ".image-gallery-slide img": {},
-              //     },
-              //     ".image-gallery-fullscreen-button": {
-              //       height: "100%",
-              //       width: "100%",
-              //       opacity: 0,
-              //     },
-              //     ".image-gallery-index": {
-              //       padding: 1,
-              //       fontSize: 12,
-              //       borderRadius: "8px",
-              //       background: "rgba(0,0,0,.3)",
-              //     },
-              //   },
-              // },
-            }}
-          >
-            {/* <ImageGallery
+    <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box sx={style}>
+        <Typography
+          id="modal-modal-title"
+          variant="h6"
+          component="h2"
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          {media.name} (Click vào từng ảnh để xem chi tiết)
+          <Tooltip title="Đóng" placement="right">
+            <CloseRoundedIcon
+              fontSize="medium"
+              sx={{
+                cursor: "pointer",
+                opacity: 0.7,
+                transition: "all .2s linear",
+                "&:hover": {
+                  opacity: 1,
+                },
+              }}
+              onClick={handleClose}
+            />
+          </Tooltip>
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { def: "column", lg: "row" },
+            gap: { def: 1, md: 2 },
+            // ".image-gallery": {
+            //   width: { def: "100%", lg: "80%" },
+            //   ".image-gallery-slide-wrapper": {
+            //     ".css-3mhmj0 svg": {
+            //       opacity: 0,
+            //       transform: "translateX(40%)",
+            //       transition: "all 0.2s ease-in-out",
+            //     },
+            //     ".css-qm0hdc svg": {
+            //       opacity: 0,
+            //       transform: "translateX(-40%)",
+            //       transition: "all 0.2s ease-in-out",
+            //     },
+            //     "&:hover .css-3mhmj0 svg, &:hover .css-qm0hdc svg": {
+            //       opacity: 0.5,
+            //       transform: "translateX(0)",
+            //       "&:hover": {
+            //         opacity: 1,
+            //       },
+            //     },
+            //     ".image-gallery-slides": {
+            //       borderRadius: "10px",
+            //       backgroundColor: "black",
+            //       // ".image-gallery-slide img": {},
+            //     },
+            //     ".image-gallery-fullscreen-button": {
+            //       height: "100%",
+            //       width: "100%",
+            //       opacity: 0,
+            //     },
+            //     ".image-gallery-index": {
+            //       padding: 1,
+            //       fontSize: 12,
+            //       borderRadius: "8px",
+            //       background: "rgba(0,0,0,.3)",
+            //     },
+            //   },
+            // },
+          }}
+        >
+          {/* <ImageGallery
               items={images}
               autoPlay={false}
               showPlayButton={false}
@@ -213,302 +212,281 @@ const ModalDetailMedia = ({ open, setOpen, media }) => {
                 </Box>
               )}
             /> */}
-            <EmblaCarousel
-              slides={SLIDES}
-              options={OPTIONS}
-              images={images}
-              thumbnail={media.thumbnail}
-              outOfStock={media["out-of-stock"]}
-            />
-            <Box
+          <EmblaCarousel
+            slides={SLIDES}
+            options={OPTIONS}
+            images={images}
+            thumbnail={media.thumbnail}
+            outOfStock={media["out-of-stock"]}
+          />
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { def: "column", md: "row", lg: "column" },
+              justifyContent: !media["out-of-stock"] && "center",
+              gap: { sm: 0, md: 13 },
+            }}
+          >
+            <Typography
+              id="modal-modal-description"
               sx={{
-                display: "flex",
-                flexDirection: { def: "column", md: "row", lg: "column" },
-                justifyContent: !media["out-of-stock"] && "center",
-                gap: { sm: 0, md: 13 },
+                my: 2,
+                px: { md: "1rem", lg: 0 },
+                width: media["out-of-stock"]
+                  ? { md: "20rem", lg: "12.8rem" }
+                  : "100%",
               }}
             >
               <Typography
-                id="modal-modal-description"
+                variant="p"
+                sx={{ fontSize: { def: "20px", lg: "16px" } }}
+              >
+                Thông tin sản phẩm:
+              </Typography>
+              <br />
+              Tên: {media.name} <br />
+              Chất liệu: {media.substance} <br />
+              Kích thước: {media.size} <br />
+              {`Giá: ${media.price}`}
+            </Typography>
+            {!media["out-of-stock"] && (
+              <Box
                 sx={{
-                  my: 2,
                   px: { md: "1rem", lg: 0 },
-                  width: media["out-of-stock"]
-                    ? { md: "20rem", lg: "12.8rem" }
-                    : "100%",
                 }}
               >
-                <Typography
-                  variant="p"
-                  sx={{ fontSize: { def: "20px", lg: "16px" } }}
-                >
-                  Thông tin sản phẩm:
-                </Typography>
-                <br />
-                Tên: {media.name} <br />
-                Chất liệu: {media.substance} <br />
-                Kích thước: {media.size} <br />
-                {`Giá: ${media.price}`}
-              </Typography>
-              {!media["out-of-stock"] && (
-                <Box
-                  sx={{
-                    px: { md: "1rem", lg: 0 },
+                <Typography variant="h6">Liên hệ</Typography>
+                <form
+                  ref={form}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
                   }}
+                  onSubmit={handleSendEmail}
                 >
-                  <Typography variant="h6">Liên hệ</Typography>
-                  <form
-                    ref={form}
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
+                  <TextField
+                    id="outlined-name"
+                    label="Nhập tên của bạn"
+                    name="from_name"
+                    type="text"
+                    size="small"
+                    onChange={handleInputChange}
+                    inputRef={inputNameRef}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        inputNameRef.current.blur();
+                        inputNumberRef.current.focus();
+                      }
                     }}
-                    onSubmit={handleSendEmail}
-                  >
-                    <TextField
-                      id="outlined-name"
-                      label="Nhập tên của bạn"
-                      name="from_name"
-                      type="text"
-                      size="small"
-                      onChange={handleInputChange}
-                      inputRef={inputNameRef}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                          inputNameRef.current.blur();
-                          inputNumberRef.current.focus();
-                        }
-                      }}
-                      autoComplete="off"
-                      sx={{
-                        maxWidth: 600,
-                        minWidth: 50,
-                        width: 200,
-                        mt: 2,
-                        label: {
-                          fontSize: 12,
-                          color: (theme) =>
-                            theme.palette.mode === "light"
-                              ? "black"
-                              : "#eeeeee",
-                        },
-                        "label.Mui-focused": {
-                          color: (theme) =>
-                            theme.palette.mode === "light"
-                              ? "black"
-                              : "#eeeeee",
-                        },
-                        "&:hover label": {
-                          color: (theme) =>
-                            theme.palette.mode === "light"
-                              ? "black"
-                              : "#eeeeee",
-                        },
-                        ".MuiOutlinedInput-root": {
-                          fieldset: {
-                            borderRadius: 4,
-                            height: 40,
-                            borderColor: (theme) =>
-                              theme.palette.mode === "light"
-                                ? "black"
-                                : "#eeeeee80",
-                          },
-                          "&:hover fieldset": {
-                            borderColor: (theme) =>
-                              theme.palette.mode === "light"
-                                ? "black"
-                                : "#eeeeee80",
-                          },
-                          "&.Mui-focused fieldset": {
-                            borderColor: (theme) =>
-                              theme.palette.mode === "light"
-                                ? "black"
-                                : "#eeeeee80",
-                          },
-                        },
-                      }}
-                    />
-                    <TextField
-                      id="outlined-number"
-                      label="Số điện thoại"
-                      name="from_number"
-                      type="number"
-                      size="small"
-                      onChange={handleInputChange}
-                      inputRef={inputNumberRef}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                          inputNumberRef.current.blur();
-                          inputEmailRef.current.focus();
-                        }
-                      }}
-                      autoComplete="off"
-                      sx={{
-                        maxWidth: 600,
-                        minWidth: 50,
-                        width: 200,
-                        mt: 1,
-                        "input[type='number']::-webkit-inner-spin-button, input[type='number']::-webkit-outer-spin-button":
-                          {
-                            WebkitAppearance: "none",
-                            margin: 0,
-                          },
-                        label: {
-                          fontSize: 12,
-                          color: (theme) =>
-                            theme.palette.mode === "light"
-                              ? "black"
-                              : "#eeeeee",
-                        },
-                        "label.Mui-focused": {
-                          color: (theme) =>
-                            theme.palette.mode === "light"
-                              ? "black"
-                              : "#eeeeee",
-                        },
-                        "&:hover label": {
-                          color: (theme) =>
-                            theme.palette.mode === "light"
-                              ? "black"
-                              : "#eeeeee",
-                        },
-                        ".MuiOutlinedInput-root": {
-                          fieldset: {
-                            borderRadius: 4,
-                            height: 40,
-                            borderColor: (theme) =>
-                              theme.palette.mode === "light"
-                                ? "black"
-                                : "#eeeeee80",
-                          },
-                          "&:hover fieldset": {
-                            borderColor: (theme) =>
-                              theme.palette.mode === "light"
-                                ? "black"
-                                : "#eeeeee80",
-                          },
-                          "&.Mui-focused fieldset": {
-                            borderColor: (theme) =>
-                              theme.palette.mode === "light"
-                                ? "black"
-                                : "#eeeeee80",
-                          },
-                        },
-                      }}
-                    />
-                    <TextField
-                      id="outlined-email"
-                      label="Email của bạn"
-                      name="from_email"
-                      type="text"
-                      size="small"
-                      onChange={handleInputChange}
-                      inputRef={inputEmailRef}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                          inputEmailRef.current.blur();
-                          handleSendEmail(e);
-                        }
-                      }}
-                      autoComplete="off"
-                      sx={{
-                        maxWidth: 600,
-                        minWidth: 50,
-                        width: 200,
-                        mt: 1,
-                        label: {
-                          fontSize: 12,
-                          color: (theme) =>
-                            theme.palette.mode === "light"
-                              ? "black"
-                              : "#eeeeee",
-                        },
-                        "label.Mui-focused": {
-                          color: (theme) =>
-                            theme.palette.mode === "light"
-                              ? "black"
-                              : "#eeeeee",
-                        },
-                        "&:hover label": {
-                          color: (theme) =>
-                            theme.palette.mode === "light"
-                              ? "black"
-                              : "#eeeeee",
-                        },
-                        ".MuiOutlinedInput-root": {
-                          fieldset: {
-                            borderRadius: 4,
-                            height: 40,
-                            borderColor: (theme) =>
-                              theme.palette.mode === "light"
-                                ? "black"
-                                : "#eeeeee80",
-                          },
-                          "&:hover fieldset": {
-                            borderColor: (theme) =>
-                              theme.palette.mode === "light"
-                                ? "black"
-                                : "#eeeeee80",
-                          },
-                          "&.Mui-focused fieldset": {
-                            borderColor: (theme) =>
-                              theme.palette.mode === "light"
-                                ? "black"
-                                : "#eeeeee80",
-                          },
-                        },
-                      }}
-                    />
-                    <TextField
-                      id="outlined-sku"
-                      name="sku"
-                      type="text"
-                      size="small"
-                      defaultValue={media.SKU}
-                      autoComplete="off"
-                      sx={{
-                        opacity: 0,
-                        display: "none",
-                      }}
-                    />
-                    <br />
-                    <Button
-                      variant="outlined"
-                      type="submit"
-                      size="small"
-                      onClick={(e) => handleSendEmail(e)}
-                      sx={{
+                    autoComplete="off"
+                    sx={{
+                      maxWidth: 600,
+                      minWidth: 50,
+                      width: 200,
+                      mt: 2,
+                      label: {
+                        fontSize: 12,
                         color: (theme) =>
-                          theme.palette.mode === "light"
-                            ? "black"
-                            : "#eeeeee80",
+                          theme.palette.mode === "light" ? "black" : "#eeeeee",
+                      },
+                      "label.Mui-focused": {
+                        color: (theme) =>
+                          theme.palette.mode === "light" ? "black" : "#eeeeee",
+                      },
+                      "&:hover label": {
+                        color: (theme) =>
+                          theme.palette.mode === "light" ? "black" : "#eeeeee",
+                      },
+                      ".MuiOutlinedInput-root": {
+                        fieldset: {
+                          borderRadius: 4,
+                          height: 40,
+                          borderColor: (theme) =>
+                            theme.palette.mode === "light"
+                              ? "black"
+                              : "#eeeeee80",
+                        },
+                        "&:hover fieldset": {
+                          borderColor: (theme) =>
+                            theme.palette.mode === "light"
+                              ? "black"
+                              : "#eeeeee80",
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: (theme) =>
+                            theme.palette.mode === "light"
+                              ? "black"
+                              : "#eeeeee80",
+                        },
+                      },
+                    }}
+                  />
+                  <TextField
+                    id="outlined-number"
+                    label="Số điện thoại"
+                    name="from_number"
+                    type="number"
+                    size="small"
+                    onChange={handleInputChange}
+                    inputRef={inputNumberRef}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        inputNumberRef.current.blur();
+                        inputEmailRef.current.focus();
+                      }
+                    }}
+                    autoComplete="off"
+                    sx={{
+                      maxWidth: 600,
+                      minWidth: 50,
+                      width: 200,
+                      mt: 1,
+                      "input[type='number']::-webkit-inner-spin-button, input[type='number']::-webkit-outer-spin-button":
+                        {
+                          WebkitAppearance: "none",
+                          margin: 0,
+                        },
+                      label: {
+                        fontSize: 12,
+                        color: (theme) =>
+                          theme.palette.mode === "light" ? "black" : "#eeeeee",
+                      },
+                      "label.Mui-focused": {
+                        color: (theme) =>
+                          theme.palette.mode === "light" ? "black" : "#eeeeee",
+                      },
+                      "&:hover label": {
+                        color: (theme) =>
+                          theme.palette.mode === "light" ? "black" : "#eeeeee",
+                      },
+                      ".MuiOutlinedInput-root": {
+                        fieldset: {
+                          borderRadius: 4,
+                          height: 40,
+                          borderColor: (theme) =>
+                            theme.palette.mode === "light"
+                              ? "black"
+                              : "#eeeeee80",
+                        },
+                        "&:hover fieldset": {
+                          borderColor: (theme) =>
+                            theme.palette.mode === "light"
+                              ? "black"
+                              : "#eeeeee80",
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: (theme) =>
+                            theme.palette.mode === "light"
+                              ? "black"
+                              : "#eeeeee80",
+                        },
+                      },
+                    }}
+                  />
+                  <TextField
+                    id="outlined-email"
+                    label="Email của bạn"
+                    name="from_email"
+                    type="text"
+                    size="small"
+                    onChange={handleInputChange}
+                    inputRef={inputEmailRef}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        inputEmailRef.current.blur();
+                        handleSendEmail(e);
+                      }
+                    }}
+                    autoComplete="off"
+                    sx={{
+                      maxWidth: 600,
+                      minWidth: 50,
+                      width: 200,
+                      mt: 1,
+                      label: {
+                        fontSize: 12,
+                        color: (theme) =>
+                          theme.palette.mode === "light" ? "black" : "#eeeeee",
+                      },
+                      "label.Mui-focused": {
+                        color: (theme) =>
+                          theme.palette.mode === "light" ? "black" : "#eeeeee",
+                      },
+                      "&:hover label": {
+                        color: (theme) =>
+                          theme.palette.mode === "light" ? "black" : "#eeeeee",
+                      },
+                      ".MuiOutlinedInput-root": {
+                        fieldset: {
+                          borderRadius: 4,
+                          height: 40,
+                          borderColor: (theme) =>
+                            theme.palette.mode === "light"
+                              ? "black"
+                              : "#eeeeee80",
+                        },
+                        "&:hover fieldset": {
+                          borderColor: (theme) =>
+                            theme.palette.mode === "light"
+                              ? "black"
+                              : "#eeeeee80",
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: (theme) =>
+                            theme.palette.mode === "light"
+                              ? "black"
+                              : "#eeeeee80",
+                        },
+                      },
+                    }}
+                  />
+                  <TextField
+                    id="outlined-sku"
+                    name="sku"
+                    type="text"
+                    size="small"
+                    defaultValue={media.SKU}
+                    autoComplete="off"
+                    sx={{
+                      opacity: 0,
+                      display: "none",
+                    }}
+                  />
+                  <br />
+                  <Button
+                    variant="outlined"
+                    type="submit"
+                    size="small"
+                    onClick={(e) => handleSendEmail(e)}
+                    sx={{
+                      color: (theme) =>
+                        theme.palette.mode === "light" ? "black" : "#eeeeee80",
+                      border: (theme) =>
+                        theme.palette.mode === "light"
+                          ? "1px solid #878787de"
+                          : "1px solid #eeeeee80",
+                      borderRadius: "1000px",
+                      "&:hover": {
                         border: (theme) =>
                           theme.palette.mode === "light"
                             ? "1px solid #878787de"
                             : "1px solid #eeeeee80",
-                        borderRadius: "1000px",
-                        "&:hover": {
-                          border: (theme) =>
-                            theme.palette.mode === "light"
-                              ? "1px solid #878787de"
-                              : "1px solid #eeeeee80",
-                        },
-                        "&:active": {
-                          transform: "scale(0.94)",
-                        },
-                        width: "max-content",
-                      }}
-                    >
-                      Gửi
-                    </Button>
-                  </form>
-                </Box>
-              )}
-            </Box>
+                      },
+                      "&:active": {
+                        transform: "scale(0.94)",
+                      },
+                      width: "max-content",
+                    }}
+                  >
+                    Gửi
+                  </Button>
+                </form>
+              </Box>
+            )}
           </Box>
         </Box>
-      </Modal>
-    </Box>
+      </Box>
+    </Modal>
   );
 };
 
